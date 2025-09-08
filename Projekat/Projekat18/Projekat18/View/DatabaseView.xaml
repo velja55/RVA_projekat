@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="Projekat18.View.DatabaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Projekat18.View"
+              xmlns:vm="clr-namespace:Projekat18.ViewModel"
+              xmlns:helpers="clr-namespace:Projekat18.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:DatabaseViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Dodavanje baze -->
+            <RowDefinition Height="Auto"/>
+            <!-- Search -->
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <!-- Tabela -->
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+        <!-- Provider -->
+        <TextBox Width="120" Margin="3"
+             Text="{Binding Provider, UpdateSourceTrigger=PropertyChanged}" />
+        <!-- Type -->
+        <ComboBox Width="120" Margin="3"
+              SelectedItem="{Binding Type}"
+              ItemsSource="{x:Static helpers:DatabaseTypeHelper.GetValues}" />
+        <!-- Query Language -->
+        <TextBox Width="120" Margin="3"
+             Text="{Binding QueryLanguage, UpdateSourceTrigger=PropertyChanged}" />
+        <!-- State -->
+        <ComboBox Width="120" Margin="3"
+              SelectedItem="{Binding State}"
+              ItemsSource="{x:Static helpers:DatabaseStateHelper.GetValues}" />
+        <!-- Dodaj dugme -->
+        <Button Content="Dodaj" Command="{Binding AddDatabaseCommand}" Width="80" Margin="3"/>
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="5,0,0,0"/>
+        </StackPanel>
+
+
+    <Grid Margin="10" Grid.Row="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Search panel iznad tabele -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <TextBox Width="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0" />
+            <Button Content="Search" Command="{Binding SearchCommand}" Margin="0,0,10,0" Width="80"/>
+            <Button Content="Reset search" Command="{Binding ResetSearchCommand}" Width="100"/>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding FilteredDatabases}" 
+                  AutoGenerateColumns="False"
+                  Grid.Row="1"
+                  CanUserAddRows="False"
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Provider" Binding="{Binding Provider}" />
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" />
+                <DataGridTextColumn Header="Query Language" Binding="{Binding QueryLanguage}" />
+                <DataGridTextColumn Header="State" Binding="{Binding State}" />
+                    <DataGridTemplateColumn Header="Izmeni">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Izmeni"
+                                Command="{Binding DataContext.EditRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                CommandParameter="{Binding}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!-- Dugme Obriši -->
+                    <DataGridTemplateColumn Header="Obriši">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Obriši"
+                                Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                CommandParameter="{Binding}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+        </DataGrid>
+            
+        </Grid>
+        <Border Grid.Row="3" Margin="0,10,0,10" Padding="12"
+        Visibility="{Binding IsEditVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+        Background="#F5F5F7" CornerRadius="10" BorderBrush="#CCC" BorderThickness="1">
+            <StackPanel>
+                <DockPanel LastChildFill="False" VerticalAlignment="Center">
+                <!-- Polja za izmenu -->
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                    <StackPanel Margin="0,0,12,0">
+                        <TextBlock Text="Provider:" Margin="0,0,0,3" FontWeight="SemiBold"/>
+                        <TextBox Width="120" Text="{Binding Provider, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,12,0">
+                        <TextBlock Text="Type:" Margin="0,0,0,3" FontWeight="SemiBold"/>
+                        <ComboBox Width="120"
+                    SelectedItem="{Binding Type}"
+                    ItemsSource="{x:Static helpers:DatabaseTypeHelper.GetValues}" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,12,0">
+                        <TextBlock Text="Query Language:" Margin="0,0,0,3" FontWeight="SemiBold"/>
+                        <TextBox Width="120" Text="{Binding QueryLanguage, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,12,0">
+                        <TextBlock Text="State:" Margin="0,0,0,3" FontWeight="SemiBold"/>
+                        <ComboBox Width="120"
+                    SelectedItem="{Binding State}"
+                    ItemsSource="{x:Static helpers:DatabaseStateHelper.GetValues}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Dugmad desno, fiksirana -->
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                    <Button Content="Sačuvaj izmenu" Command="{Binding EditDatabaseCommand}" Width="120" Margin="3"/>
+                    <Button Content="Otkaži" Command="{Binding CancelEditCommand}" Width="80" Margin="3"/>
+                </StackPanel>
+            </DockPanel>
+            <!-- Error Message ispod, centriran -->
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="0,10,0,0" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

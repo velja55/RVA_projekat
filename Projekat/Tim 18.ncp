@@ -1,0 +1,112 @@
+<Project>
+  <Name>Tim 18</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>DatabaseSystem</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Comment">
+        <Text>Primarna klasa - DataBase
++ stanja: Online, Recovering, Restoring, Offline
+
+Izdvojena klasa - LegacyDatabase
+
+ostale su pomocne
+
+LiveCharts2 grafikon - Basic Bars za svako stanje
+
+Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy sistem</Text>
+        <Location left="50" top="361" />
+        <Size width="455" height="184" />
+      </Entity>
+      <Entity type="Class">
+        <Name>Database</Name>
+        <Access>Public</Access>
+        <Location left="668" top="64" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private string provider</Member>
+        <Member type="Field">private DatabaseType type</Member>
+        <Member type="Field">private string queryLanguage</Member>
+        <Member type="Field">public List&lt;Table&gt; Tables</Member>
+        <Member type="Field">public Administrator Admin</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Table</Name>
+        <Access>Public</Access>
+        <Location left="343" top="64" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private string name</Member>
+        <Member type="Field">private List&lt;string&gt; columnHeaders</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Administrator</Name>
+        <Access>Public</Access>
+        <Location left="999" top="64" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private string userName</Member>
+        <Member type="Field">private string certificate</Member>
+        <Member type="Field">private string permissions</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LegacyDigitalStorage</Name>
+        <Access>Public</Access>
+        <Location left="668" top="361" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">protected string storageAdmin</Member>
+        <Member type="Field">protected int numberOfTables</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LegacyDatabase</Name>
+        <Access>Public</Access>
+        <Location left="999" top="361" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private string dBSystemName</Member>
+        <Member type="Field">private string approachToStoring</Member>
+        <Member type="Field">private string instructionSyntax</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>DatabaseType</Name>
+        <Access>Public</Access>
+        <Location left="50" top="64" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Value>RELATIONAL</Value>
+        <Value>NOSQL</Value>
+        <Value>VECTOR</Value>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Generalization" first="5" second="4">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="1" second="2">
+        <Label>contains</Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>0..*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="1" second="3">
+        <Label>utilizes</Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartMultiplicity>0..*</StartMultiplicity>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
