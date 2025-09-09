@@ -12,21 +12,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Projekat18.View
 {
     /// <summary>
-    /// Interaction logic for DatabaseView.xaml
+    /// Interaction logic for UserView.xaml
     /// </summary>
-    public partial class DatabaseView : UserControl
+    public partial class UserView : Window
     {
-        public DatabaseView(Administrator administrator)
+        public UserView(Administrator administrator)
         {
             InitializeComponent();
 
-            DataContext = new DatabaseViewModel(administrator);
+            DataContext = new UserViewModel(administrator);
         }
     }
 }

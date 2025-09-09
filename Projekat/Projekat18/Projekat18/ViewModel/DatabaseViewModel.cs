@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace Projekat18.ViewModel
 {
-    public class DatabaseViewModel : INotifyPropertyChanged
+    public class DatabaseViewModel : BaseViewModel
     {
         #region Fields and Properties
         public ObservableCollection<Database> Databases { get; set; }
@@ -81,18 +81,18 @@ namespace Projekat18.ViewModel
         public MyICommand ResetSearchCommand { get; }
 
         public MyICommand CancelEditCommand { get; }
-                public MyICommand<Database> EditRowCommand { get; }
+        public MyICommand<Database> EditRowCommand { get; }
         public MyICommand<Database> RemoveRowCommand { get; }
         public MyICommand AddDatabaseCommand { get; }
         public MyICommand EditDatabaseCommand { get; }
         public MyICommand RemoveDatabaseCommand { get; }
         #endregion  
-        public DatabaseViewModel()
+        public DatabaseViewModel(Administrator u)
         {
             Databases = new ObservableCollection<Database>
             {
-                new Database("SQL Server", DatabaseType.RELATIONAL, "T-SQL", null, new Administrator("admin", "cert1", "all"), DatabaseState.Online),
-                new Database("MongoDB", DatabaseType.NOSQL, "MongoQL", null, new Administrator("root", "cert2", "read,write"), DatabaseState.Offline)
+                new Database("SQL Server", DatabaseType.RELATIONAL, "T-SQL", null, new Administrator("Stefan", "Admin", "Add/Edit/Delete", "Stefan"), DatabaseState.Online),
+                new Database("MongoDB", DatabaseType.NOSQL, "MongoQL", null, new Administrator("Veljko", "Admin", "Add/Edit/Delete", "Veljko"), DatabaseState.Offline)
                
             };
             FilteredDatabases = new ObservableCollection<Database>(Databases);
@@ -236,7 +236,5 @@ namespace Projekat18.ViewModel
             ClearFields();
         }
         #endregion
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }

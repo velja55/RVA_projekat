@@ -11,14 +11,16 @@ namespace Projekat18.Model
         public string UserName { get; set; }
         public string Certificate { get; set; }
         public string Permissions { get; set; }
+        public string Password { get; set; }
 
         public Administrator() { }
 
-        public Administrator(string userName, string certificate, string permissions)
+        public Administrator(string userName, string certificate, string permissions, string password)
         {
             UserName = userName;
             Certificate = certificate;
             Permissions = permissions;
+            Password = password;
         }
     }
 }
