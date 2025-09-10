@@ -19,6 +19,7 @@ namespace Projekat18.ViewModel
         public ObservableCollection<Database> FilteredDatabases { get; set; }
 
         private string _searchText;
+        public string CurrentUserName { get; set; }
         public string SearchText
         {
             get => _searchText;
@@ -73,6 +74,14 @@ namespace Projekat18.ViewModel
             get => _selectedDatabase;
             set { _selectedDatabase = value; OnPropertyChanged(nameof(SelectedDatabase)); LoadEditFields(); }
         }
+
+        private bool _canAddDatabase;
+        public bool CanAddDatabase
+        {
+            get => _canAddDatabase;
+            set { _canAddDatabase = value; OnPropertyChanged(nameof(CanAddDatabase)); }
+        }
+
         #endregion
 
 
@@ -95,6 +104,9 @@ namespace Projekat18.ViewModel
                 new Database("MongoDB", DatabaseType.NOSQL, "MongoQL", null, new Administrator("Veljko", "Admin", "Add/Edit/Delete", "Veljko"), DatabaseState.Offline)
                
             };
+            CurrentUserName = u.UserName;
+            CanAddDatabase = u.Permissions?.Contains("Add") ?? false;
+
             FilteredDatabases = new ObservableCollection<Database>(Databases);
             ErrorMessage= "";
             SearchCommand = new MyICommand(SearchDatabases);
@@ -125,8 +137,8 @@ namespace Projekat18.ViewModel
             return (db.Provider?.ToLower().Contains(query) ?? false)
                 || (db.Type.ToString().ToLower().Contains(query))
                 || (db.QueryLanguage?.ToLower().Contains(query) ?? false)
-                || (db.State.ToString().ToLower().Contains(query));
-                //|| (db.Administrator?.Name?.ToLower().Contains(query) ?? false);
+                || (db.State.ToString().ToLower().Contains(query))
+                || (db.Admin?.UserName?.ToLower().Contains(query) ?? false);
         }
 
         private void ResetSearch()
