@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -19,15 +18,14 @@ using System.Windows.Shapes;
 namespace Projekat18.View
 {
     /// <summary>
-    /// Interaction logic for DatabaseView.xaml
+    /// Interaction logic for TableView.xaml
     /// </summary>
-    public partial class DatabaseView : UserControl
+    public partial class TableView : UserControl
     {
-        public DatabaseView(UserViewModel um, Administrator administrator,ObservableCollection<Database> dataBases)
+        public TableView(ObservableCollection<Table> tables)
         {
             InitializeComponent();
-
-            DataContext = new DatabaseViewModel(um,administrator,dataBases);
+            DataContext = new TablesViewModel(tables);
         }
     }
 }

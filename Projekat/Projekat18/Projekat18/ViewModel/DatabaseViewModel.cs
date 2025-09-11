@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Projekat18.View;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace Projekat18.ViewModel
 {
@@ -17,6 +19,8 @@ namespace Projekat18.ViewModel
         #region Fields and Properties
         public ObservableCollection<Database> Databases { get; set; }
         public ObservableCollection<Database> FilteredDatabases { get; set; }
+
+        private Administrator admin;
 
         private string _searchText;
         public string CurrentUserName { get; set; }
@@ -75,12 +79,14 @@ namespace Projekat18.ViewModel
             set { _selectedDatabase = value; OnPropertyChanged(nameof(SelectedDatabase)); LoadEditFields(); }
         }
 
+
         private bool _canAddDatabase;
         public bool CanAddDatabase
         {
             get => _canAddDatabase;
             set { _canAddDatabase = value; OnPropertyChanged(nameof(CanAddDatabase)); }
         }
+        private UserViewModel _parent;
 
         #endregion
 
@@ -95,18 +101,15 @@ namespace Projekat18.ViewModel
         public MyICommand AddDatabaseCommand { get; }
         public MyICommand EditDatabaseCommand { get; }
         public MyICommand RemoveDatabaseCommand { get; }
-        #endregion  
-        public DatabaseViewModel(Administrator u)
+        public MyICommand<Database> ShowTablesCommand { get; }
+
+        #endregion
+        public DatabaseViewModel(UserViewModel parent,Administrator u,ObservableCollection<Database> databases)
         {
-            Databases = new ObservableCollection<Database>
-            {
-                new Database("SQL Server", DatabaseType.RELATIONAL, "T-SQL", null, new Administrator("Stefan", "Admin", "Add/Edit/Delete", "Stefan"), DatabaseState.Online),
-                new Database("MongoDB", DatabaseType.NOSQL, "MongoQL", null, new Administrator("Veljko", "Admin", "Add/Edit/Delete", "Veljko"), DatabaseState.Offline)
-               
-            };
+            Databases = databases;
             CurrentUserName = u.UserName;
             CanAddDatabase = u.Permissions?.Contains("Add") ?? false;
-
+            admin = u;
             FilteredDatabases = new ObservableCollection<Database>(Databases);
             ErrorMessage= "";
             SearchCommand = new MyICommand(SearchDatabases);
@@ -117,9 +120,22 @@ namespace Projekat18.ViewModel
             EditRowCommand = new MyICommand<Database>(EditRow);
             RemoveRowCommand = new MyICommand<Database>(RemoveRow);
             CancelEditCommand = new MyICommand(() => { IsEditVisible = false; ClearFields(); SelectedDatabase = null; });
+            ShowTablesCommand = new MyICommand<Database>(ShowTablesForDatabase);
+            _parent = parent;
         }
 
         #region Methods
+        private void ShowTablesForDatabase(Database db)
+        {
+            if (db == null || db.Tables == null) return;
+            // Otvori novi View za TableView i prosledi tabele
+            var tableView = new TableView(new ObservableCollection<Table>(db.Tables));
+            // Primer: Ako imaš UserViewModel i CurrentView property:
+            // (Pretpostavka da postoji CurrentView kao u ranijem kodu)
+            _parent.CurrentView = tableView;
+            // Ako si u DatabaseViewModel, trebaš referencu na parent viewmodel ili event
+        }
+
 
         private void SearchDatabases()
         {
@@ -164,7 +180,7 @@ namespace Projekat18.ViewModel
                 ErrorMessage = "Query Language je obavezan.";
                 return;
             }
-            var db = new Database(Provider, Type, QueryLanguage, null, null, State);
+            var db = new Database(Provider, Type, QueryLanguage, null, admin, State);
             Databases.Add(db);
             FilteredDatabases.Add(db);
             ClearFields();

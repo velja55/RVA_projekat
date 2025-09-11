@@ -16,7 +16,9 @@ namespace Projekat18.ViewModel
     public class MainWindowViewModel : BaseViewModel
     {
         private readonly ObservableCollection<Administrator> users = new ObservableCollection<Administrator>();
+        private readonly ObservableCollection<Database> databases = new ObservableCollection<Database>();
         private readonly Window _currentWindow;
+
 
         private string _username;
         public string Username

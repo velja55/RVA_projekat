@@ -11,7 +11,8 @@ namespace Projekat18.Model
         public string Name { get; set; }
         public List<string> ColumnHeaders { get; set; }
 
-      
+        public string ColumnsPreview => string.Join(", ", ColumnHeaders ?? new List<string>());
+
         public Table()
         {
             ColumnHeaders = new List<string>();
