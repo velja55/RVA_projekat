@@ -63,10 +63,14 @@
     <Compile Include="Helpers\DatabaseStateHelper.cs" />
     <Compile Include="Helpers\DatabaseTypeHelper.cs" />
     <Compile Include="Helpers\MyICommand.cs" />
+    <Compile Include="ViewModel\AddTableViewModel.cs" />
     <Compile Include="ViewModel\DatabaseViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\TableViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="View\AddTableView.xaml.cs">
+      <DependentUpon>AddTableView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DatabaseView.xaml.cs">
       <DependentUpon>DatabaseView.xaml</DependentUpon>
     </Compile>
@@ -88,6 +92,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AddTableView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

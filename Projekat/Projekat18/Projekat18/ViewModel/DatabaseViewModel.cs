@@ -102,6 +102,8 @@ namespace Projekat18.ViewModel
         public MyICommand EditDatabaseCommand { get; }
         public MyICommand RemoveDatabaseCommand { get; }
         public MyICommand<Database> ShowTablesCommand { get; }
+        public MyICommand<Database> ShowAddTableViewCommand { get; }
+
 
         #endregion
         public DatabaseViewModel(UserViewModel parent,Administrator u,ObservableCollection<Database> databases)
@@ -121,10 +123,16 @@ namespace Projekat18.ViewModel
             RemoveRowCommand = new MyICommand<Database>(RemoveRow);
             CancelEditCommand = new MyICommand(() => { IsEditVisible = false; ClearFields(); SelectedDatabase = null; });
             ShowTablesCommand = new MyICommand<Database>(ShowTablesForDatabase);
+            ShowAddTableViewCommand = new MyICommand<Database>(ShowAddTableView);
             _parent = parent;
         }
 
         #region Methods
+        private void ShowAddTableView(Database db)
+        {
+            // Pretpostavljam da imaš UserViewModel kao parent
+            _parent.CurrentView = new AddTableView(_parent, db,admin,Databases);
+        }
         private void ShowTablesForDatabase(Database db)
         {
             if (db == null || db.Tables == null) return;
@@ -135,7 +143,6 @@ namespace Projekat18.ViewModel
             _parent.CurrentView = tableView;
             // Ako si u DatabaseViewModel, trebaš referencu na parent viewmodel ili event
         }
-
 
         private void SearchDatabases()
         {
