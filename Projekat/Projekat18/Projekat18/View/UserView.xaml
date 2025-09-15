@@ -11,6 +11,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
             <Button Content="Baze" Command="{Binding ShowDatabaseViewCommand}" Margin="5"/>
             <Button Content="Tabele" Command="{Binding ShowTableViewCommand}" Margin="5"/>
+            <Button Content="Grafikon stanja" Command="{Binding ShowStateChartViewCommand}" Margin="5"/>
             <!-- Dodaj druga dugmad za ostale UserControl-e -->
         </StackPanel>
         <!-- Prikaz aktivnog UserControl-a -->

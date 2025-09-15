@@ -35,10 +35,16 @@
         <TextBox Width="120" Margin="3"
              Text="{Binding QueryLanguage, UpdateSourceTrigger=PropertyChanged}" />
         <!-- State -->
-        <ComboBox Width="120" Margin="3"
-              SelectedItem="{Binding State}"
-              ItemsSource="{x:Static helpers:DatabaseStateHelper.GetValues}" />
-        <!-- Dodaj dugme -->
+            <ComboBox Width="120" Margin="3"
+    SelectedItem="{Binding State}"
+    ItemsSource="{x:Static helpers:DatabaseStateHelper.GetStates}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <!-- Dodaj dugme -->
         <Button Content="Dodaj" Command="{Binding AddDatabaseCommand}" Width="80" Margin="3"/>
             <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="5,0,0,0"/>
         </StackPanel>
@@ -64,7 +70,7 @@
                 <DataGridTextColumn Header="Provider" Binding="{Binding Provider}" />
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}" />
                 <DataGridTextColumn Header="Query Language" Binding="{Binding QueryLanguage}" />
-                <DataGridTextColumn Header="State" Binding="{Binding State}" />
+                <DataGridTextColumn Header="State" Binding="{Binding State.Name}" />
                     <DataGridTemplateColumn Header="Pregledaj tabele">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -145,10 +151,16 @@
                     </StackPanel>
                     <StackPanel Margin="0,0,12,0">
                         <TextBlock Text="State:" Margin="0,0,0,3" FontWeight="SemiBold"/>
-                        <ComboBox Width="120"
-                    SelectedItem="{Binding State}"
-                    ItemsSource="{x:Static helpers:DatabaseStateHelper.GetValues}" />
-                    </StackPanel>
+                            <ComboBox Width="120" Margin="3"
+                        SelectedItem="{Binding State}"
+                        ItemsSource="{x:Static helpers:DatabaseStateHelper.GetStates}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
                 </StackPanel>
 
                 <!-- Dugmad desno, fiksirana -->

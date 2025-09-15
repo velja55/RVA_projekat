@@ -47,8 +47,8 @@ namespace Projekat18.Model
             set { _admin = value; OnPropertyChanged(nameof(Admin)); }
         }
 
-        private DatabaseState _state;
-        public DatabaseState State
+        private IDatabaseState _state;
+        public IDatabaseState State
         {
             get => _state;
             set { _state = value; OnPropertyChanged(nameof(State)); }
@@ -59,7 +59,7 @@ namespace Projekat18.Model
             Tables = new ObservableCollection<Table>();
         }
 
-        public Database(string provider, DatabaseType type, string queryLanguage, ObservableCollection<Table> tables, Administrator admin, DatabaseState state)
+        public Database(string provider, DatabaseType type, string queryLanguage, ObservableCollection<Table> tables, Administrator admin, IDatabaseState state)
         {
             Provider = provider;
             Type = type;

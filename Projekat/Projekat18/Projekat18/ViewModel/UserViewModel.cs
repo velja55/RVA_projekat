@@ -1,4 +1,5 @@
-﻿using Projekat18.Helpers;
+﻿using Projekat18.DBStates;
+using Projekat18.Helpers;
 using Projekat18.Model;
 using Projekat18.Model.Enums;
 using Projekat18.View;
@@ -8,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Projekat18.ViewModel
 {
@@ -24,6 +26,7 @@ namespace Projekat18.ViewModel
         public MyICommand ShowTableViewCommand { get; }
         public MyICommand ShowLegacyViewCommand { get; }
 
+        public MyICommand ShowStateChartViewCommand { get; }
         public UserViewModel(Administrator administrator)
         {
 
@@ -47,8 +50,8 @@ namespace Projekat18.ViewModel
             {
 
 
-                new Database("SQL Server", DatabaseType.RELATIONAL, "T-SQL",tables1, new Administrator("Stefan", "Admin", "Add/Edit/Delete", "Stefan"), DatabaseState.Online),
-                new Database("MongoDB", DatabaseType.NOSQL, "MongoQL", tables2, new Administrator("Veljko", "Admin", "Add/Edit/Delete", "Veljko"), DatabaseState.Offline)
+                new Database("SQL Server", DatabaseType.RELATIONAL, "T-SQL",tables1, new Administrator("Stefan", "Admin", "Add/Edit/Delete", "Stefan"), new OnlineState()),
+                new Database("MongoDB", DatabaseType.NOSQL, "MongoQL", tables2, new Administrator("Veljko", "Admin", "Add/Edit/Delete", "Veljko"), new OfflineState())
 
             };
             CurrentView = new DatabaseView(this,administrator,Databases);
@@ -61,6 +64,7 @@ namespace Projekat18.ViewModel
             }
             ShowDatabaseViewCommand = new MyICommand(() => CurrentView = new DatabaseView(this,administrator,Databases));
             ShowTableViewCommand=new MyICommand(() => CurrentView = new TableView(tables));
+            ShowStateChartViewCommand = new MyICommand(()=>CurrentView=new StateChartView(Databases));
         }
     }
 }

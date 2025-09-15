@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Projekat18.View;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using Projekat18.DBStates;
 
 namespace Projekat18.ViewModel
 {
@@ -65,8 +66,8 @@ namespace Projekat18.ViewModel
             set { _queryLanguage = value; OnPropertyChanged(nameof(QueryLanguage)); }
         }
 
-        private DatabaseState _state;
-        public DatabaseState State
+        private IDatabaseState _state;
+        public IDatabaseState State
         {
             get => _state;
             set { _state = value; OnPropertyChanged(nameof(State)); }
@@ -239,7 +240,7 @@ namespace Projekat18.ViewModel
             Provider = "";
             QueryLanguage = "";
             Type = DatabaseType.RELATIONAL;
-            State = DatabaseState.Online;
+            State = new OnlineState();
         }
 
         private void LoadEditFields()

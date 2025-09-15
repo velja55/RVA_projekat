@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Projekat18.Helpers;
 
 namespace Projekat18.View
 {
@@ -28,6 +29,10 @@ namespace Projekat18.View
             InitializeComponent();
 
             DataContext = new DatabaseViewModel(um,administrator,dataBases);
+            var test = DatabaseTypeHelper.GetValues;
+            var test2 = DatabaseStateHelper.GetStates;
         }
+
+       
     }
 }
