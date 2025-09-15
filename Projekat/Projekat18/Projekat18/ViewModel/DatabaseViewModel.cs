@@ -12,6 +12,7 @@ using System.Windows;
 using Projekat18.View;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using Projekat18.DBStates;
+using Projekat18.Adapter;
 
 namespace Projekat18.ViewModel
 {
@@ -89,6 +90,50 @@ namespace Projekat18.ViewModel
         }
         private UserViewModel _parent;
 
+        private string _legacyDbSystemName;
+        public string LegacyDbSystemName
+        {
+            get => _legacyDbSystemName;
+            set { _legacyDbSystemName = value; OnPropertyChanged(nameof(LegacyDbSystemName)); }
+        }
+
+        private string _legacyInstructionSyntax;
+        public string LegacyInstructionSyntax
+        {
+            get => _legacyInstructionSyntax;
+            set { _legacyInstructionSyntax = value; OnPropertyChanged(nameof(LegacyInstructionSyntax)); }
+        }
+
+        private int _legacyNumberOfTables;
+        public int LegacyNumberOfTables
+        {
+            get => _legacyNumberOfTables;
+            set { _legacyNumberOfTables = value; OnPropertyChanged(nameof(LegacyNumberOfTables)); }
+        }
+
+        // Opcionalno: poruka za grešku
+        private string _legacyErrorMessage;
+        public string LegacyErrorMessage
+        {
+            get => _legacyErrorMessage;
+            set { _legacyErrorMessage = value; OnPropertyChanged(nameof(LegacyErrorMessage)); }
+        }
+
+        private string _legacyStateString;
+        public string LegacyStateString
+        {
+            get => _legacyStateString;
+            set { _legacyStateString = value; OnPropertyChanged(nameof(LegacyStateString)); }
+        }
+
+        public string LegacyStorageAdmin { get; set; }
+
+
+        public ObservableCollection<string> LegacyStates { get; set; } = new ObservableCollection<string>
+        {
+            "Online", "Offline", "Recovering", "Restoring"
+        };
+
         #endregion
 
 
@@ -105,7 +150,7 @@ namespace Projekat18.ViewModel
         public MyICommand<Database> ShowTablesCommand { get; }
         public MyICommand<Database> ShowAddTableViewCommand { get; }
 
-
+        public MyICommand AddLegacyDatabaseCommand { get; }
         #endregion
         public DatabaseViewModel(UserViewModel parent,Administrator u,ObservableCollection<Database> databases)
         {
@@ -125,10 +170,41 @@ namespace Projekat18.ViewModel
             CancelEditCommand = new MyICommand(() => { IsEditVisible = false; ClearFields(); SelectedDatabase = null; });
             ShowTablesCommand = new MyICommand<Database>(ShowTablesForDatabase);
             ShowAddTableViewCommand = new MyICommand<Database>(ShowAddTableView);
+            AddLegacyDatabaseCommand = new MyICommand(AddLegacyDatabase);
             _parent = parent;
         }
 
         #region Methods
+
+        private void AddLegacyDatabase()
+        {
+            LegacyErrorMessage = "";
+
+            // Validacija kao pre...
+
+            // LegacyDatabase bez StateString!
+            var legacyDb = new LegacyDatabase
+            {
+                DbSystemName = LegacyDbSystemName,
+                InstructionSyntax = LegacyInstructionSyntax,
+                NumberOfTables = LegacyNumberOfTables,
+                StorageAdmin = LegacyStorageAdmin
+            };
+
+            // State unosiš iz VM-a, npr. iz ComboBoxa
+            var adapter = new LegacyDigitalStorageAdapter(legacyDb, LegacyStateString);
+
+            Databases.Add(adapter);
+            FilteredDatabases.Add(adapter);
+
+            // Resetuj polja
+            LegacyDbSystemName = "";
+            LegacyInstructionSyntax = "";
+            LegacyNumberOfTables = 0;
+            LegacyStorageAdmin = "";
+            LegacyStateString = ""; // ili podesi default
+        }
+
         private void ShowAddTableView(Database db)
         {
             // Pretpostavljam da imaš UserViewModel kao parent

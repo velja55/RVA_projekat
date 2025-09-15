@@ -123,6 +123,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Adapter\LegacyDigitalStorageAdapter.cs" />
     <Compile Include="DBStates\IDatabaseState.cs" />
     <Compile Include="DBStates\OfflineState.cs" />
     <Compile Include="DBStates\OnlineState.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Helpers\BoolToVisibilityConverter.cs" />
     <Compile Include="Helpers\DatabaseStateHelper.cs" />
     <Compile Include="Helpers\DatabaseTypeHelper.cs" />
+    <Compile Include="Helpers\DatabaseStateFactory.cs" />
     <Compile Include="Helpers\MyICommand.cs" />
     <Compile Include="ViewModel\AddTableViewModel.cs" />
     <Compile Include="ViewModel\StateChartViewModel.cs" />
