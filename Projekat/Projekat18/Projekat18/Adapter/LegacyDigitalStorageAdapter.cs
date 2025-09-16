@@ -15,9 +15,8 @@ namespace Projekat18.Adapter
     {
         public LegacyDigitalStorageAdapter(LegacyDatabase legacyDb,string state)
         {
-            // Popuni property-je Database klase iz legacy objekata
             Provider = legacyDb.DbSystemName;
-            Type = DatabaseType.RELATIONAL; // ili omogući mapiranje iz legacy
+            Type = DatabaseType.RELATIONAL;
             QueryLanguage = legacyDb.InstructionSyntax;
             Tables = new ObservableCollection<Table>();
             for (int i = 0; i < legacyDb.NumberOfTables; i++)
@@ -25,7 +24,7 @@ namespace Projekat18.Adapter
                 Tables.Add(new Table { Name = $"LegacyTable{i + 1}", ColumnHeaders = new List<string>() });
             }
             Admin = new Administrator { UserName = legacyDb.StorageAdmin };
-            State =  DatabaseStateFactory.CreateState(state); // ili neki adapter za stanje, po potrebi
+            State =  DatabaseStateFactory.CreateState(state);
         }
     }
 }

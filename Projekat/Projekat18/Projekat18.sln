@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projekat18", "Projekat18\Projekat18.csproj", "{881B98DC-9C0B-490E-BBFA-8F4DA179E14B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{C188E275-15C7-4E8E-B564-9D80C19082CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfDatabaseServer", "WcfDatabaseServer\WcfDatabaseServer.csproj", "{6BF3B5AB-5C71-4EEA-B651-CBD9AFD854BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +19,19 @@ Global
 		{881B98DC-9C0B-490E-BBFA-8F4DA179E14B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{881B98DC-9C0B-490E-BBFA-8F4DA179E14B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{881B98DC-9C0B-490E-BBFA-8F4DA179E14B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C188E275-15C7-4E8E-B564-9D80C19082CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C188E275-15C7-4E8E-B564-9D80C19082CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C188E275-15C7-4E8E-B564-9D80C19082CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C188E275-15C7-4E8E-B564-9D80C19082CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BF3B5AB-5C71-4EEA-B651-CBD9AFD854BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BF3B5AB-5C71-4EEA-B651-CBD9AFD854BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BF3B5AB-5C71-4EEA-B651-CBD9AFD854BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF3B5AB-5C71-4EEA-B651-CBD9AFD854BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97FEE9D6-89F3-4513-8B69-1E369BA74AFA}
 	EndGlobalSection
 EndGlobal

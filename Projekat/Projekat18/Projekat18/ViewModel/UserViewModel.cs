@@ -1,5 +1,7 @@
-﻿using Projekat18.DBStates;
+﻿using Contracts;
+using Projekat18.DBStates;
 using Projekat18.Helpers;
+using Projekat18.MapperHelper;
 using Projekat18.Model;
 using Projekat18.Model.Enums;
 using Projekat18.View;
@@ -7,14 +9,20 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Administrator = Projekat18.Model.Administrator;
+using Table = Projekat18.Model.Table;
 
 namespace Projekat18.ViewModel
 {
     public  class UserViewModel : BaseViewModel
     {
+        private static string _address = "http://localhost:8080/DatabaseService";
+
         private object _currentView;
         public object CurrentView
         {
@@ -35,31 +43,22 @@ namespace Projekat18.ViewModel
         public MyICommand ShowStateChartViewCommand { get; }
         public UserViewModel(Administrator administrator)
         {
+            var binding = new BasicHttpBinding();
+            var endpoint = new EndpointAddress(_address);
 
-            ObservableCollection<Table> tables1 = new ObservableCollection<Table>
-                {
-                    new Table("Korisnici", new List<string> { "Id", "Ime", "Prezime", "Email" }),
-                    new Table("Porudzbine", new List<string> { "PorudzbinaId", "KorisnikId", "Datum", "Ukupno" }),
-                    new Table("Proizvodi", new List<string> { "ProizvodId", "Naziv", "Cena", "Kategorija" }),
-                    new Table("Kategorije", new List<string> { "KategorijaId", "Naziv" }),
-                };
+            ChannelFactory<IDatabaseService> factory = new ChannelFactory<IDatabaseService>(binding, endpoint);
 
-            ObservableCollection<Table> tables2 = new ObservableCollection<Table>
+            IDatabaseService proxy = factory.CreateChannel();
+
+            var dbs = proxy.GetDatabases();
+
+            ObservableCollection<Database> Databases = new ObservableCollection<Database>();
+
+            foreach (var d in dbs)
             {
-                new Table("Korisnici2", new List<string> { "Id2", "Ime", "Prezime", "Email" }),
-                new Table("Porudzbine2", new List<string> { "PorudzbinaId2", "KorisnikId", "Datum", "Ukupno" }),
-                new Table("Proizvodi2", new List<string> { "ProizvodId2", "Naziv", "Cena", "Kategorija" }),
-                new Table("Kategorije2", new List<string> { "KategorijaId2", "Naziv" }),
-            };
+                Databases.Add(DatabaseMapper.FromContract(d));
+            }
 
-            ObservableCollection<Database> Databases = new ObservableCollection<Database>
-            {
-
-
-                new Database("SQL Server", DatabaseType.RELATIONAL, "T-SQL",tables1, new Administrator("Stefan", "Admin", "Add/Edit/Delete", "Stefan"), new OnlineState()),
-                new Database("MongoDB", DatabaseType.NOSQL, "MongoQL", tables2, new Administrator("Veljko", "Admin", "Add/Edit/Delete", "Veljko"), new OfflineState())
-
-            };
             CurrentView = new DatabaseView(this,administrator,Databases);
             
             foreach (Database db in Databases) {

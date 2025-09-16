@@ -17,7 +17,6 @@ namespace Projekat18.ViewModel
 
         public StateChartViewModel(ObservableCollection<Database> databases)
         {
-            // Grupisanje baza po State.Name i boji
             var stateGroups = databases
                 .GroupBy(db => db.State.Name)
                 .Select(g => new
