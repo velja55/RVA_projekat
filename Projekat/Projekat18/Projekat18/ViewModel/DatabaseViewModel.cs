@@ -68,10 +68,14 @@ namespace Projekat18.ViewModel
         }
 
         private IDatabaseState _state;
+        public string StateColor => State?.Color;
         public IDatabaseState State
         {
             get => _state;
-            set { _state = value; OnPropertyChanged(nameof(State)); }
+            set { _state = value; OnPropertyChanged(nameof(State));
+                
+                OnPropertyChanged(nameof(StateColor));
+            }
         }
 
         private Database _selectedDatabase;
@@ -267,12 +271,25 @@ namespace Projekat18.ViewModel
             var db = new Database(Provider, Type, QueryLanguage, null, admin, State);
             Databases.Add(db);
             FilteredDatabases.Add(db);
+            if (db.Tables.Count > 0) {
+                foreach (Table t in db.Tables)
+                    _parent.tables.Add(t);
+            }
+            _parent.PushUndo(() => {
+                Databases.Remove(db);
+                FilteredDatabases.Remove(db);
+            });
+            _parent.PushRedo(() => {
+                Databases.Add(db);
+                FilteredDatabases.Add(db);
+            });
+
+
             ClearFields();
         }
 
         private void EditDatabase()
         {
-
             if (string.IsNullOrWhiteSpace(Provider))
             {
                 System.Windows.MessageBox.Show("Provider je obavezan!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -285,10 +302,48 @@ namespace Projekat18.ViewModel
             }
 
             if (SelectedDatabase == null) return;
-            SelectedDatabase.Provider = Provider;
-            SelectedDatabase.Type = Type;
-            SelectedDatabase.QueryLanguage = QueryLanguage;
-            SelectedDatabase.State = State;
+
+            // --- Pamti staro stanje ---
+            var db = SelectedDatabase;
+            string oldProvider = db.Provider;
+            DatabaseType oldType = db.Type;
+            string oldQueryLang = db.QueryLanguage;
+            IDatabaseState oldState = db.State;
+
+            // --- Pamti novo stanje ---
+            string newProvider = Provider;
+            DatabaseType newType = Type;
+            string newQueryLang = QueryLanguage;
+            IDatabaseState newState = State;
+
+            // --- Izvrši izmenu ---
+            db.Provider = newProvider;
+            db.Type = newType;
+            db.QueryLanguage = newQueryLang;
+            db.State = newState;
+
+            // --- Undo vrati staro ---
+            _parent.PushUndo(() =>
+            {
+                db.Provider = oldProvider;
+                db.Type = oldType;
+                db.QueryLanguage = oldQueryLang;
+                db.State = oldState;
+                OnPropertyChanged(nameof(Databases));
+                OnPropertyChanged(nameof(FilteredDatabases));
+            });
+
+            // --- Redo ponovi novo ---
+            _parent.PushRedo(() =>
+            {
+                db.Provider = newProvider;
+                db.Type = newType;
+                db.QueryLanguage = newQueryLang;
+                db.State = newState;
+                OnPropertyChanged(nameof(Databases));
+                OnPropertyChanged(nameof(FilteredDatabases));
+            });
+
             IsEditVisible = false;
             SelectedDatabase = null;
             OnPropertyChanged(nameof(Databases));
@@ -343,6 +398,29 @@ namespace Projekat18.ViewModel
             if (db == null) return;
             Databases.Remove(db);
             FilteredDatabases.Remove(db);
+            foreach(Table t in db.Tables)
+            {
+                _parent.tables.Remove(t);
+
+            }
+
+
+            _parent.PushUndo(() => {
+                Databases.Add(db);
+                FilteredDatabases.Add(db);
+                foreach (Table t in db.Tables)
+                    _parent.tables.Add(t);
+                OnPropertyChanged(nameof(Databases));
+                OnPropertyChanged(nameof(FilteredDatabases));
+            });
+
+            _parent.PushRedo(() => {
+                Databases.Remove(db);
+                FilteredDatabases.Remove(db);
+                OnPropertyChanged(nameof(Databases));
+                OnPropertyChanged(nameof(FilteredDatabases));
+            });
+
             if (SelectedDatabase == db)
                 SelectedDatabase = null;
             ClearFields();

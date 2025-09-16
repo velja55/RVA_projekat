@@ -21,30 +21,36 @@ namespace Projekat18.ViewModel
             get => _currentView;
             set { _currentView = value; OnPropertyChanged(nameof(CurrentView)); }
         }
+        public Stack<Action> UndoStack { get; } = new Stack<Action>();
+        public Stack<Action> RedoStack { get; } = new Stack<Action>();
+
+        public MyICommand UndoCommand { get; }
+        public MyICommand RedoCommand { get; }
 
         public MyICommand ShowDatabaseViewCommand { get; }
         public MyICommand ShowTableViewCommand { get; }
         public MyICommand ShowLegacyViewCommand { get; }
 
+        public ObservableCollection<Table> tables = new ObservableCollection<Table>();
         public MyICommand ShowStateChartViewCommand { get; }
         public UserViewModel(Administrator administrator)
         {
 
             ObservableCollection<Table> tables1 = new ObservableCollection<Table>
-{
-    new Table("Korisnici", new List<string> { "Id", "Ime", "Prezime", "Email" }),
-    new Table("Porudzbine", new List<string> { "PorudzbinaId", "KorisnikId", "Datum", "Ukupno" }),
-    new Table("Proizvodi", new List<string> { "ProizvodId", "Naziv", "Cena", "Kategorija" }),
-    new Table("Kategorije", new List<string> { "KategorijaId", "Naziv" }),
-};
+                {
+                    new Table("Korisnici", new List<string> { "Id", "Ime", "Prezime", "Email" }),
+                    new Table("Porudzbine", new List<string> { "PorudzbinaId", "KorisnikId", "Datum", "Ukupno" }),
+                    new Table("Proizvodi", new List<string> { "ProizvodId", "Naziv", "Cena", "Kategorija" }),
+                    new Table("Kategorije", new List<string> { "KategorijaId", "Naziv" }),
+                };
 
             ObservableCollection<Table> tables2 = new ObservableCollection<Table>
-{
-    new Table("Korisnici2", new List<string> { "Id2", "Ime", "Prezime", "Email" }),
-    new Table("Porudzbine2", new List<string> { "PorudzbinaId2", "KorisnikId", "Datum", "Ukupno" }),
-    new Table("Proizvodi2", new List<string> { "ProizvodId2", "Naziv", "Cena", "Kategorija" }),
-    new Table("Kategorije2", new List<string> { "KategorijaId2", "Naziv" }),
-};
+            {
+                new Table("Korisnici2", new List<string> { "Id2", "Ime", "Prezime", "Email" }),
+                new Table("Porudzbine2", new List<string> { "PorudzbinaId2", "KorisnikId", "Datum", "Ukupno" }),
+                new Table("Proizvodi2", new List<string> { "ProizvodId2", "Naziv", "Cena", "Kategorija" }),
+                new Table("Kategorije2", new List<string> { "KategorijaId2", "Naziv" }),
+            };
 
             ObservableCollection<Database> Databases = new ObservableCollection<Database>
             {
@@ -55,7 +61,7 @@ namespace Projekat18.ViewModel
 
             };
             CurrentView = new DatabaseView(this,administrator,Databases);
-            ObservableCollection<Table> tables = new ObservableCollection<Table>();
+            
             foreach (Database db in Databases) {
                 foreach (Table t in db.Tables)
                 {
@@ -65,6 +71,39 @@ namespace Projekat18.ViewModel
             ShowDatabaseViewCommand = new MyICommand(() => CurrentView = new DatabaseView(this,administrator,Databases));
             ShowTableViewCommand=new MyICommand(() => CurrentView = new TableView(tables));
             ShowStateChartViewCommand = new MyICommand(()=>CurrentView=new StateChartView(Databases));
+            UndoCommand = new MyICommand(Undo);
+            RedoCommand = new MyICommand(Redo);
         }
+
+        public void PushUndo(Action undoAction)
+        {
+            UndoStack.Push(undoAction);
+            //RedoStack.Clear();
+        }
+
+        private void Undo()
+        {
+            if (UndoStack.Count > 0)
+            {
+                var action = UndoStack.Pop();
+                action();
+            }
+        }
+
+        private void Redo()
+        {
+            if (RedoStack.Count > 0)
+            {
+                var action = RedoStack.Pop();
+                action();
+            }
+        }
+
+        public void PushRedo(Action undoAction)
+        {
+            RedoStack.Push(undoAction);
+            RedoStack.Clear();
+        }
+
     }
 }

@@ -11,6 +11,9 @@
     <UserControl.Resources>
         <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <helpers:AdminButtonVisibilityConverter x:Key="AdminButtonVisibilityConverter"/>
+        <Style x:Key="StateCellStyle" TargetType="DataGridCell">
+            <Setter Property="Background" Value="{Binding StateColor}" />
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -90,7 +93,12 @@
                   Grid.Row="1"
                   CanUserAddRows="False"
                   >
-            <DataGrid.Columns>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="{Binding StateColor}" />
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
                 <DataGridTextColumn Header="Provider" Binding="{Binding Provider}" />
                 <DataGridTextColumn Header="Type" Binding="{Binding Type}" />
                 <DataGridTextColumn Header="Query Language" Binding="{Binding QueryLanguage}" />
