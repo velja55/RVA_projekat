@@ -64,8 +64,8 @@
                  Text="{Binding LegacyNumberOfTables, UpdateSourceTrigger=PropertyChanged}"
                  />
                 <ComboBox Width="120" Margin="3"
-            SelectedItem="{Binding State}"
-            ItemsSource="{x:Static helpers:DatabaseStateHelper.GetStates}">
+                    SelectedItem="{Binding State}"
+                    ItemsSource="{x:Static helpers:DatabaseStateHelper.GetStates}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}"/>

@@ -149,6 +149,7 @@
     <Compile Include="Helpers\MyICommand.cs" />
     <Compile Include="MapperHelper\AdministratorMapper.cs" />
     <Compile Include="MapperHelper\DatabaseMapper.cs" />
+    <Compile Include="MapperHelper\LegacyDatabaseMapper.cs" />
     <Compile Include="MapperHelper\TableMapper.cs" />
     <Compile Include="ViewModel\AddTableViewModel.cs" />
     <Compile Include="ViewModel\StateChartViewModel.cs" />

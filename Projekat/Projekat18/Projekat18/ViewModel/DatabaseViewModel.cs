@@ -223,6 +223,8 @@ namespace Projekat18.ViewModel
                 StorageAdmin = CurrentUserName
             };
 
+            proxy.AddLegacyDatabase(LegacyDatabaseMapper.FromModel(legacyDb));
+
             var adapter = new LegacyDigitalStorageAdapter(legacyDb, LegacyStateString);
 
             Databases.Add(adapter);

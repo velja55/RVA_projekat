@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Contracts
 {
     [DataContract]
-    public class LegacyDatabase
+    public class LegacyDatabase : LegacyDigitalStorage
     {
         [DataMember]
         public string DBSystemName { get; set; }

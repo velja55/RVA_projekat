@@ -20,9 +20,9 @@ namespace WcfDatabaseServer
                 input = Console.ReadLine();
             } while (!input.ToLower().Equals("xml") && !input.ToLower().Equals("csv") && !input.ToLower().Equals("json"));
 
-            DatabaseService serviceInstance = DatabaseService.Instance;
-
             DatabaseService.ConfigureFormat(input);
+
+            DatabaseService serviceInstance = DatabaseService.Instance;
 
             using (ServiceHost host = new ServiceHost(serviceInstance))
             {
