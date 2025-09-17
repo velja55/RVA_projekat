@@ -30,6 +30,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <Member type="Field">private string queryLanguage</Member>
         <Member type="Field">public List&lt;Table&gt; Tables</Member>
         <Member type="Field">public Administrator Admin</Member>
+        <Member type="Constructor">public Database()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -40,6 +41,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <Collapsed>False</Collapsed>
         <Member type="Field">private string name</Member>
         <Member type="Field">private List&lt;string&gt; columnHeaders</Member>
+        <Member type="Constructor">public Table()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -51,6 +53,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <Member type="Field">private string userName</Member>
         <Member type="Field">private string certificate</Member>
         <Member type="Field">private string permissions</Member>
+        <Member type="Constructor">public Administrator()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -87,9 +90,12 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Interface">
         <Name>IDatabaseState</Name>
         <Access>Public</Access>
-        <Location left="987" top="58" />
+        <Location left="987" top="47" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Property">sgring Name { get; }</Member>
+        <Member type="Property">string Color { get; }</Member>
+        <Member type="Method">void Handle(Database db)</Member>
       </Entity>
       <Entity type="Class">
         <Name>OnlineState</Name>
@@ -118,7 +124,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>reloadingClass</Name>
         <Access>Public</Access>
-        <Location left="1531" top="51" />
+        <Location left="1564" top="178" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
