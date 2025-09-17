@@ -20,9 +20,11 @@ namespace WcfDatabaseServer
                 input = Console.ReadLine();
             } while (!input.ToLower().Equals("xml") && !input.ToLower().Equals("csv") && !input.ToLower().Equals("json"));
 
+            DatabaseService serviceInstance = DatabaseService.Instance;
+
             DatabaseService.ConfigureFormat(input);
 
-            using (ServiceHost host = new ServiceHost(typeof(DatabaseService)))
+            using (ServiceHost host = new ServiceHost(serviceInstance))
             {
                 host.Open();
                 Console.WriteLine("WCF server running at http://localhost:8081/DatabaseService");

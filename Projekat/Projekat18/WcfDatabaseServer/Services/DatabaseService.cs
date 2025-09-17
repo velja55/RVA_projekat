@@ -5,18 +5,25 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WcfDatabaseServer.Services
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class DatabaseService : IDatabaseService
     {
         private IDataStorage storage;
         private static string SelectedFormat = "XML";
         private static readonly ILog log = LogManager.GetLogger(typeof(DatabaseService));
 
-        public DatabaseService()
+        private static readonly Lazy<DatabaseService> _instance =
+        new Lazy<DatabaseService>(() => new DatabaseService());
+
+        public static DatabaseService Instance => _instance.Value;
+
+        private DatabaseService()
         {
             SetStorageFormat(SelectedFormat);
             EnsureDefaultDatabases();
