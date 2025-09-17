@@ -117,8 +117,11 @@ namespace WcfDatabaseServer.Services
         public void DeleteDatabase(string dbName)
         {
             var dbs = storage.LoadDatabases();
+            var ldbs = storage.LoadLegacyDatabases();
             dbs.RemoveAll(d => d.Provider == dbName);
+            ldbs.RemoveAll(l => l.DBSystemName == dbName);
             storage.SaveDatabases(dbs);
+            storage.SaveLegacyDatabases(ldbs);
             log.Info($"[INFO] Deleting database. Provider: {dbName}.\n");
         }
         public List<Table> GetTables(string dbName)
