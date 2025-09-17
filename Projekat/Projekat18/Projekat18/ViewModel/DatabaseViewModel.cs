@@ -22,6 +22,7 @@ using Table = Projekat18.Model.Table;
 using Projekat18.MapperHelper;
 using log4net;
 using log4net.Config;
+using Projekat18.Command;
 
 namespace Projekat18.ViewModel
 {
@@ -31,7 +32,9 @@ namespace Projekat18.ViewModel
         public ObservableCollection<Database> Databases { get; set; }
 
         private static string _address = "http://localhost:8081/DatabaseService";
-        IDatabaseService proxy;
+        public IDatabaseService proxy;
+
+        CommandManager commandManager;
 
         private static readonly ILog log = LogManager.GetLogger(typeof(DatabaseViewModel));
 
@@ -184,16 +187,13 @@ namespace Projekat18.ViewModel
 
             SearchCommand = new MyICommand(SearchDatabases);
             ResetSearchCommand = new MyICommand(ResetSearch);
-            AddDatabaseCommand = new MyICommand(AddDatabase);
-            EditDatabaseCommand = new MyICommand(EditDatabase);
-            RemoveDatabaseCommand = new MyICommand(RemoveDatabase, () => SelectedDatabase != null);
             EditRowCommand = new MyICommand<Database>(EditRow);
             RemoveRowCommand = new MyICommand<Database>(RemoveRow);
             CancelEditCommand = new MyICommand(() => { IsEditVisible = false; ClearFields(); SelectedDatabase = null; });
             ShowTablesCommand = new MyICommand<Database>(ShowTablesForDatabase);
             ShowAddTableViewCommand = new MyICommand<Database>(ShowAddTableView);
             AddLegacyDatabaseCommand = new MyICommand(AddLegacyDatabase);
-
+            commandManager= new CommandManager();
             _parent = parent;
         }
 
@@ -284,132 +284,67 @@ namespace Projekat18.ViewModel
             log.Info("Search reset.");
         }
 
-        private void AddDatabase()
+        public void OnAddDatabase()
         {
             ErrorMessage = "";
 
             if (string.IsNullOrWhiteSpace(Provider))
             {
                 ErrorMessage = "Provider is required.";
-                log.Error("Failed to add database - Provider is missing.");
                 return;
             }
             if (string.IsNullOrWhiteSpace(QueryLanguage))
             {
                 ErrorMessage = "Query Language is required.";
-                log.Error("Failed to add database - Query Language is missing.");
                 return;
             }
 
             var db = new Database(Provider, Type, QueryLanguage, null, admin, State);
-            Databases.Add(db);
-
-            proxy.AddDatabase(DatabaseMapper.FromModel(db));
-            FilteredDatabases.Add(db);
-
-            log.Info($"Database added: {db.Provider}, {db.Type}, {db.QueryLanguage}");
-
-            if (db.Tables.Count > 0)
-            {
-                foreach (Table t in db.Tables)
-                    _parent.tables.Add(t);
-            }
-
-            _parent.PushUndo(() =>
-            {
-                proxy.DeleteDatabase(db.Provider);
-                Databases.Remove(db);
-                FilteredDatabases.Remove(db);
-                log.Info($"Undo database addition: {db.Provider}");
-            });
-            _parent.PushRedo(() =>
-            {
-                proxy.AddDatabase(DatabaseMapper.FromModel(db));
-                Databases.Add(db);
-                FilteredDatabases.Add(db);
-                log.Info($"Redo database addition: {db.Provider}");
-            });
-
+            var cmd = new AddDatabaseCommand(this, db);
+            commandManager.ExecuteCommand(cmd);
+            //_parent.PushUndo(cmd);
             ClearFields();
         }
 
-        private void EditDatabase()
+        public void OnEditDatabase()
         {
+            ErrorMessage = "";
+
+            if (SelectedDatabase == null)
+            {
+                ErrorMessage = "No database selected for edit!";
+                return;
+            }
             if (string.IsNullOrWhiteSpace(Provider))
             {
-                MessageBox.Show("Provider is required!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                log.Error("Failed to edit database - Provider is missing.");
+                ErrorMessage = "Provider is required!";
                 return;
             }
             if (string.IsNullOrWhiteSpace(QueryLanguage))
             {
-                MessageBox.Show("Query Language is required!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                log.Error("Failed to edit database - Query Language is missing.");
+                ErrorMessage = "Query Language is required!";
                 return;
             }
 
-            if (SelectedDatabase == null) return;
-
-            var db = SelectedDatabase;
-            string oldProvider = db.Provider;
-            DatabaseType oldType = db.Type;
-            string oldQueryLang = db.QueryLanguage;
-            IDatabaseState oldState = db.State;
-
-            db.Provider = Provider;
-            db.Type = Type;
-            db.QueryLanguage = QueryLanguage;
-            db.State = State;
-
-            proxy.UpdateDatabase(DatabaseMapper.FromModel(db), oldProvider);
-            log.Info($"Database updated: {db.Provider}");
-
-            _parent.PushUndo(() =>
-            {
-                string oldProviderTemp;
-                db.Provider = oldProvider;
-                oldProviderTemp = db.Provider;
-                db.Type = oldType;
-                db.QueryLanguage = oldQueryLang;
-                db.State = oldState;
-                proxy.UpdateDatabase(DatabaseMapper.FromModel(db), oldProviderTemp);
-                log.Info($"Undo database update: {db.Provider}");
-                OnPropertyChanged(nameof(Databases));
-                OnPropertyChanged(nameof(FilteredDatabases));
-            });
-
-            _parent.PushRedo(() =>
-            {
-                string oldProviderTemp = db.Provider;
-                db.Provider = Provider;
-                db.Type = Type;
-                db.QueryLanguage = QueryLanguage;
-                db.State = State;
-                proxy.UpdateDatabase(DatabaseMapper.FromModel(db), oldProviderTemp);
-                log.Info($"Redo database update: {db.Provider}");
-                OnPropertyChanged(nameof(Databases));
-                OnPropertyChanged(nameof(FilteredDatabases));
-            });
-
+            var cmd = new EditDatabaseCommand(this, SelectedDatabase, Provider, Type, QueryLanguage, State);
+            commandManager.ExecuteCommand(cmd);
             IsEditVisible = false;
             SelectedDatabase = null;
-            OnPropertyChanged(nameof(Databases));
-            OnPropertyChanged(nameof(FilteredDatabases));
             ClearFields();
         }
 
-        private void RemoveDatabase()
+        public void OnRemoveDatabase(Database SelectedDatabase)
         {
-            if (SelectedDatabase == null) return;
+            if (SelectedDatabase == null)
+            {
+                ErrorMessage = "No database selected for removal!";
+                return;
+            }
 
-            log.Info($"Removing database: {SelectedDatabase.Provider}");
-
-            Databases.Remove(SelectedDatabase);
-            FilteredDatabases.Remove(SelectedDatabase);
-            SelectedDatabase = null;
-            ClearFields();
+            var cmd = new RemoveDatabaseCommand(this, SelectedDatabase);
+            commandManager.ExecuteCommand(cmd);
+            //_parent.PushUndo(cmd);
         }
-
         public bool CanSaveOrEdit()
         {
             return !string.IsNullOrWhiteSpace(Provider)
@@ -489,6 +424,10 @@ namespace Projekat18.ViewModel
                 SelectedDatabase = null;
             ClearFields();
         }
+
+        public void Undo() => commandManager.Undo();
+        public void Redo() => commandManager.Redo();
+
         #endregion
     }
 }

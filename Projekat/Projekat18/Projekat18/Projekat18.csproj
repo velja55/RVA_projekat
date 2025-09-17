@@ -130,6 +130,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Adapter\LegacyDigitalStorageAdapter.cs" />
+    <Compile Include="Command\AddDatabaseCommand.cs" />
+    <Compile Include="Command\CommandManager.cs" />
+    <Compile Include="Command\EditDatabaseCommand.cs" />
+    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Command\RemoveDatabaseCommand.cs" />
     <Compile Include="DBStates\IDatabaseState.cs" />
     <Compile Include="DBStates\OfflineState.cs" />
     <Compile Include="DBStates\OnlineState.cs" />

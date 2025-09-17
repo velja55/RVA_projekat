@@ -33,6 +33,24 @@ namespace Projekat18.View
             var test2 = DatabaseStateHelper.GetStates;
         }
 
-       
+        private void AddDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as DatabaseViewModel;
+            vm?.OnAddDatabase();
+        }
+
+        private void RemoveDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var db = button?.CommandParameter as Database;
+            var vm = DataContext as Projekat18.ViewModel.DatabaseViewModel;
+            vm?.OnRemoveDatabase(db);
+        }
+
+        private void EditDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as Projekat18.ViewModel.DatabaseViewModel;
+            vm?.OnEditDatabase();
+        }
     }
 }

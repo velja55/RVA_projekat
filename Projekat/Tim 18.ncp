@@ -15,13 +15,13 @@ ostale su pomocne
 LiveCharts2 grafikon - Basic Bars za svako stanje
 
 Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy sistem</Text>
-        <Location left="369" top="682" />
+        <Location left="2071" top="1331" />
         <Size width="455" height="184" />
       </Entity>
       <Entity type="Class">
         <Name>Database</Name>
         <Access>Public</Access>
-        <Location left="987" top="385" />
+        <Location left="1444" top="1032" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private string provider</Member>
@@ -36,7 +36,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>Table</Name>
         <Access>Public</Access>
-        <Location left="662" top="385" />
+        <Location left="1119" top="1032" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private string name</Member>
@@ -47,7 +47,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>Administrator</Name>
         <Access>Public</Access>
-        <Location left="1318" top="385" />
+        <Location left="1775" top="1032" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private string userName</Member>
@@ -59,7 +59,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>LegacyDigitalStorage</Name>
         <Access>Public</Access>
-        <Location left="1022" top="919" />
+        <Location left="1479" top="1566" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">protected string storageAdmin</Member>
@@ -69,7 +69,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>LegacyDatabase</Name>
         <Access>Public</Access>
-        <Location left="1353" top="919" />
+        <Location left="1810" top="1566" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private string dBSystemName</Member>
@@ -80,7 +80,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Enum">
         <Name>DatabaseType</Name>
         <Access>Public</Access>
-        <Location left="369" top="385" />
+        <Location left="698" top="1032" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Value>RELATIONAL</Value>
@@ -90,7 +90,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Interface">
         <Name>IDatabaseState</Name>
         <Access>Public</Access>
-        <Location left="987" top="47" />
+        <Location left="1340" top="612" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Property">sgring Name { get; }</Member>
@@ -100,7 +100,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>OnlineState</Name>
         <Access>Public</Access>
-        <Location left="431" top="58" />
+        <Location left="811" top="178" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -108,7 +108,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>OfflineState</Name>
         <Access>Public</Access>
-        <Location left="662" top="47" />
+        <Location left="1047" top="240" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -116,7 +116,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>RecoveringState</Name>
         <Access>Public</Access>
-        <Location left="1275" top="47" />
+        <Location left="1369" top="117" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -124,7 +124,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>reloadingClass</Name>
         <Access>Public</Access>
-        <Location left="1564" top="178" />
+        <Location left="1666" top="253" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -132,10 +132,78 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>LegacyDigitalStorageAdapter</Name>
         <Access>Public</Access>
-        <Location left="1001" top="647" />
+        <Location left="1458" top="1294" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">LegacyDigitalStorage digitalStorage</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IDataStorage</Name>
+        <Access>Public</Access>
+        <Location left="1871" top="698" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">List&lt;Database&gt; LoadDatabases()</Member>
+        <Member type="Method">void SaveDatabases(List&lt;DataBase&gt; dbs)</Member>
+        <Member type="Method">List&lt;LegacyDatabase&gt; LoadLegacyDatabases()</Member>
+        <Member type="Method">void SaveLegacyDatabases()</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>CsvStorage</Name>
+        <Access>Public</Access>
+        <Location left="2148" top="433" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>XmlStorage</Name>
+        <Access>Public</Access>
+        <Location left="2183" top="698" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>JsonStorage</Name>
+        <Access>Public</Access>
+        <Location left="2205" top="981" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>EditCommand</Name>
+        <Access>Public</Access>
+        <Location left="1196" top="1686" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Interface">
+        <Name>ICommand</Name>
+        <Access>Public</Access>
+        <Location left="1140" top="1331" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">void Execute()</Member>
+        <Member type="Method">void Undo()</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>AddCommand</Name>
+        <Access>Public</Access>
+        <Location left="924" top="1683" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>RemoveCommand</Name>
+        <Access>Public</Access>
+        <Location left="681" top="1686" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
       </Entity>
     </Entities>
@@ -163,8 +231,6 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="1" second="7">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -172,11 +238,23 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       </Relationship>
       <Relationship type="Realization" first="9" second="7">
         <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1380</X>
+          <Y>562</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Realization" first="8" second="7">
-        <StartOrientation>Horizontal</StartOrientation>
+        <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>905</X>
+          <Y>420</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1315</X>
+          <Y>785</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Realization" first="10" second="7">
         <StartOrientation>Horizontal</StartOrientation>
@@ -184,19 +262,59 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       </Relationship>
       <Relationship type="Realization" first="11" second="7">
         <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1472</X>
+          <Y>577</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Generalization" first="12" second="1">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="12" second="4">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="1" second="13">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+      </Relationship>
+      <Relationship type="Realization" first="14" second="13">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="15" second="13">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="16" second="13">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="17" second="18">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="19" second="18">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="20" second="18">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="18" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
       </Relationship>
     </Relationships>
   </ProjectItem>

@@ -49,7 +49,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <!-- Dodaj dugme -->
-        <Button Content="Dodaj" Command="{Binding AddDatabaseCommand}" Width="80" Margin="3"/>
+            <Button Content="Dodaj" Click="AddDatabase_Click"/>
             <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="5,0,0,0"/>
         </StackPanel>
         <GroupBox Header="Unos Legacy baze" Margin="0,0,0,10" Grid.Row="2">
@@ -135,8 +135,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="Obriši"
-                                Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                CommandParameter="{Binding}">
+                    Click="RemoveDatabase_Click"
+                    CommandParameter="{Binding}">
                                     <Button.Visibility>
                                         <MultiBinding Converter="{StaticResource AdminButtonVisibilityConverter}">
                                             <Binding Path="Admin.UserName"/>
@@ -197,8 +197,8 @@
 
                 <!-- Dugmad desno, fiksirana -->
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
-                    <Button Content="Sačuvaj izmenu" Command="{Binding EditDatabaseCommand}" Width="120" Margin="3"/>
-                    <Button Content="Otkaži" Command="{Binding CancelEditCommand}" Width="80" Margin="3"/>
+                        <Button Content="Sačuvaj izmenu" Click="EditDatabase_Click" Width="120" Margin="3"/>
+                        <Button Content="Otkaži" Command="{Binding CancelEditCommand}" Width="80" Margin="3"/>
                 </StackPanel>
             </DockPanel>
             <!-- Error Message ispod, centriran -->
