@@ -21,7 +21,7 @@ namespace Projekat18.ViewModel
 {
     public  class UserViewModel : BaseViewModel
     {
-        private static string _address = "http://localhost:8080/DatabaseService";
+        private static string _address = "http://localhost:8081/DatabaseService";
 
         private object _currentView;
         public object CurrentView

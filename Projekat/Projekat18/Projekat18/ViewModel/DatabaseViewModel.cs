@@ -30,7 +30,7 @@ namespace Projekat18.ViewModel
         #region Fields and Properties
         public ObservableCollection<Database> Databases { get; set; }
 
-        private static string _address = "http://localhost:8080/DatabaseService";
+        private static string _address = "http://localhost:8081/DatabaseService";
         IDatabaseService proxy;
 
         private static readonly ILog log = LogManager.GetLogger(typeof(DatabaseViewModel));

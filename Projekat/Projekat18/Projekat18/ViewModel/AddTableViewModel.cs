@@ -20,7 +20,7 @@ namespace Projekat18.ViewModel
 {
     public class AddTableViewModel : BaseViewModel
     {
-        private static string _address = "http://localhost:8080/DatabaseService";
+        private static string _address = "http://localhost:8081/DatabaseService";
         IDatabaseService proxy;
 
         private static readonly ILog log = LogManager.GetLogger(typeof(AddTableViewModel));
@@ -66,6 +66,7 @@ namespace Projekat18.ViewModel
                 }
 
                 _db.Tables.Add(new Table(TableName, columns));
+                _parent.tables.Add(new Table(TableName, columns));
                 proxy.UpdateDatabase(DatabaseMapper.FromModel(_db), _db.Provider);
 
                 log.Info($"Table '{TableName}' added to database '{_db.Provider}' with {columns.Count} columns.");

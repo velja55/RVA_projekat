@@ -25,7 +25,7 @@ namespace WcfDatabaseServer
             using (ServiceHost host = new ServiceHost(typeof(DatabaseService)))
             {
                 host.Open();
-                Console.WriteLine("WCF server running at http://localhost:8080/DatabaseService");
+                Console.WriteLine("WCF server running at http://localhost:8081/DatabaseService");
                 Console.WriteLine("Press Enter to exit...");
                 Console.ReadLine();
             }
