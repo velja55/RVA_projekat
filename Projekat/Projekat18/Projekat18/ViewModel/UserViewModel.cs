@@ -14,8 +14,12 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Projekat18.Command;
+
+
 using Administrator = Projekat18.Model.Administrator;
 using Table = Projekat18.Model.Table;
+using CommandManager = Projekat18.Command.CommandManager;
 
 namespace Projekat18.ViewModel
 {
@@ -23,14 +27,14 @@ namespace Projekat18.ViewModel
     {
         private static string _address = "http://localhost:8081/DatabaseService";
 
+        public CommandManager commandManager;
+
         private object _currentView;
         public object CurrentView
         {
             get => _currentView;
             set { _currentView = value; OnPropertyChanged(nameof(CurrentView)); }
         }
-        public Stack<Action> UndoStack { get; } = new Stack<Action>();
-        public Stack<Action> RedoStack { get; } = new Stack<Action>();
 
         public MyICommand UndoCommand { get; }
         public MyICommand RedoCommand { get; }
@@ -59,6 +63,7 @@ namespace Projekat18.ViewModel
                 Databases.Add(DatabaseMapper.FromContract(d));
             }
 
+            commandManager = new CommandManager();
             CurrentView = new DatabaseView(this,administrator,Databases);
             
             foreach (Database db in Databases) {
@@ -74,35 +79,19 @@ namespace Projekat18.ViewModel
             RedoCommand = new MyICommand(Redo);
         }
 
-        public void PushUndo(Action undoAction)
-        {
-            UndoStack.Push(undoAction);
-            //RedoStack.Clear();
-        }
+       
 
         private void Undo()
         {
-            if (UndoStack.Count > 0)
-            {
-                var action = UndoStack.Pop();
-                action();
-            }
+            commandManager.Undo();
         }
 
         private void Redo()
         {
-            if (RedoStack.Count > 0)
-            {
-                var action = RedoStack.Pop();
-                action();
-            }
+            commandManager.Redo();
         }
 
-        public void PushRedo(Action undoAction)
-        {
-            RedoStack.Push(undoAction);
-            RedoStack.Clear();
-        }
+
 
     }
 }

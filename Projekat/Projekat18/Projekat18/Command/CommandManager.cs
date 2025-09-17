@@ -46,5 +46,8 @@ namespace Projekat18.Command
             undoStack.Clear();
             redoStack.Clear();
         }
+
+        public CommandManager() { }
+
     }
 }

@@ -3,26 +3,32 @@ using Projekat18.Model;
 using Projekat18.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Projekat18.Command
 {
-    public class RemoveDatabaseCommand : ICommand
+    public class RemoveDatabaseCommand : DataBaseCommand
     {
         private DatabaseViewModel _viewModel;
         private Database _database;
         private int _removedIndex;
+       
+        private ObservableCollection<Table> _tables;
+        private List<Table> _removedTables = new List<Table>();
 
-        public RemoveDatabaseCommand(DatabaseViewModel viewModel, Database database)
+
+        public RemoveDatabaseCommand(DatabaseViewModel viewModel, Database database, ObservableCollection<Table> tables)
         {
             _viewModel = viewModel;
             _database = database;
             _removedIndex = _viewModel.Databases.IndexOf(_database);
+            _tables = tables;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             if (_database == null)
             {
@@ -34,10 +40,22 @@ namespace Projekat18.Command
             _viewModel.FilteredDatabases.Remove(_database);
             _viewModel.proxy.DeleteDatabase(_database.Provider);
             _viewModel.SelectedDatabase = null;
-           // _viewModel.ClearFields();
+            if (_database.Tables != null)
+            {
+                foreach (var t in _database.Tables)
+                {
+                    if (_tables.Contains(t))
+                    {
+                        _removedTables.Add(t); // za undo
+                        _tables.Remove(t);
+                    }
+                }
+            }
+
+
         }
 
-        public void Undo()
+        public override void Undo()
         {
             // Vraćamo bazu nazad na staru poziciju radi Undo
             if (_removedIndex >= 0 && _removedIndex <= _viewModel.Databases.Count)
@@ -47,6 +65,12 @@ namespace Projekat18.Command
 
             _viewModel.FilteredDatabases.Add(_database);
             _viewModel.proxy.AddDatabase(DatabaseMapper.FromModel(_database));
+            foreach (var t in _removedTables)
+            {
+                if (!_tables.Contains(t))
+                    _tables.Add(t);
+            }
+
         }
     }
 }

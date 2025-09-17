@@ -21,7 +21,7 @@ namespace Projekat18.Adapter
             Tables = new ObservableCollection<Table>();
             for (int i = 0; i < legacyDb.NumberOfTables; i++)
             {
-                Tables.Add(new Table { Name = $"LegacyTable{i + 1}", ColumnHeaders = new List<string>() });
+                Tables.Add(new Table { Name = $"LegacyTable{Provider}{i + 1}", ColumnHeaders = new List<string>() });
             }
             Admin = new Administrator { UserName = legacyDb.StorageAdmin };
             State =  DatabaseStateFactory.CreateState(state);

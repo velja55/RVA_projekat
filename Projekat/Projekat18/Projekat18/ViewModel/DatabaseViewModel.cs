@@ -111,7 +111,7 @@ namespace Projekat18.ViewModel
             get => _canAddDatabase;
             set { _canAddDatabase = value; OnPropertyChanged(nameof(CanAddDatabase)); }
         }
-        private UserViewModel _parent;
+        public UserViewModel _parent;
 
         private string _legacyDbSystemName;
         public string LegacyDbSystemName
@@ -150,10 +150,7 @@ namespace Projekat18.ViewModel
 
         public string LegacyStorageAdmin { get; set; }
 
-        public ObservableCollection<string> LegacyStates { get; set; } = new ObservableCollection<string>
-        {
-            "Online", "Offline", "Recovering", "Restoring"
-        };
+        
 
         #endregion
 
@@ -188,13 +185,13 @@ namespace Projekat18.ViewModel
             SearchCommand = new MyICommand(SearchDatabases);
             ResetSearchCommand = new MyICommand(ResetSearch);
             EditRowCommand = new MyICommand<Database>(EditRow);
-            RemoveRowCommand = new MyICommand<Database>(RemoveRow);
             CancelEditCommand = new MyICommand(() => { IsEditVisible = false; ClearFields(); SelectedDatabase = null; });
             ShowTablesCommand = new MyICommand<Database>(ShowTablesForDatabase);
             ShowAddTableViewCommand = new MyICommand<Database>(ShowAddTableView);
             AddLegacyDatabaseCommand = new MyICommand(AddLegacyDatabase);
-            commandManager= new CommandManager();
+            State = DatabaseStateHelper.GetStates.FirstOrDefault(s => s.Name == "Online");
             _parent = parent;
+            commandManager = _parent.commandManager;
         }
 
         private IDatabaseService CreateChannel()
@@ -225,11 +222,9 @@ namespace Projekat18.ViewModel
 
             proxy.AddLegacyDatabase(LegacyDatabaseMapper.FromModel(legacyDb));
 
-            var adapter = new LegacyDigitalStorageAdapter(legacyDb, LegacyStateString);
-
-            Databases.Add(adapter);
-            proxy.AddDatabase(DatabaseMapper.FromModel(adapter));
-            FilteredDatabases.Add(adapter);
+            // Umesto direktnog dodavanja, koristi komandu:
+            var cmd = new AddDatabaseCommand(this, legacyDb, LegacyStateString);
+            commandManager.ExecuteCommand(cmd);
 
             log.Info($"Legacy database added: {legacyDb.DbSystemName}");
 
@@ -343,7 +338,7 @@ namespace Projekat18.ViewModel
                 return;
             }
 
-            var cmd = new RemoveDatabaseCommand(this, SelectedDatabase);
+            var cmd = new RemoveDatabaseCommand(this, SelectedDatabase,_parent.tables);
             commandManager.ExecuteCommand(cmd);
             //_parent.PushUndo(cmd);
         }
@@ -385,47 +380,6 @@ namespace Projekat18.ViewModel
             log.Info($"Opened database edit: {db.Provider}");
         }
 
-        private void RemoveRow(Database db)
-        {
-            if (db == null) return;
-
-            proxy.DeleteDatabase(db.Provider);
-            Databases.Remove(db);
-            FilteredDatabases.Remove(db);
-
-            log.Info($"Database removed: {db.Provider}");
-
-            foreach (Table t in db.Tables)
-            {
-                _parent.tables.Remove(t);
-            }
-
-            _parent.PushUndo(() =>
-            {
-                Databases.Add(db);
-                proxy.AddDatabase(DatabaseMapper.FromModel(db));
-                FilteredDatabases.Add(db);
-                foreach (Table t in db.Tables)
-                    _parent.tables.Add(t);
-                log.Info($"Undo database removal: {db.Provider}");
-                OnPropertyChanged(nameof(Databases));
-                OnPropertyChanged(nameof(FilteredDatabases));
-            });
-
-            _parent.PushRedo(() =>
-            {
-                Databases.Remove(db);
-                proxy.DeleteDatabase(db.Provider);
-                FilteredDatabases.Remove(db);
-                log.Info($"Redo database removal: {db.Provider}");
-                OnPropertyChanged(nameof(Databases));
-                OnPropertyChanged(nameof(FilteredDatabases));
-            });
-
-            if (SelectedDatabase == db)
-                SelectedDatabase = null;
-            ClearFields();
-        }
 
         public void Undo() => commandManager.Undo();
         public void Redo() => commandManager.Redo();

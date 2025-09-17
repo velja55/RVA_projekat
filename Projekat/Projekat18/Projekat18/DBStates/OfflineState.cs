@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ServiceModel.Channels;
+using System.Windows;
 
 namespace Projekat18.DBStates
 {
@@ -14,7 +16,7 @@ namespace Projekat18.DBStates
         public string Color => "#9E9E9E"; // siva
         public void Handle(Database db)
         {
-            // ponašanje za offline
+            MessageBox.Show($"Database{db.Provider}-{db.QueryLanguage} is offline. No operations can be performed.", "Offline State", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }

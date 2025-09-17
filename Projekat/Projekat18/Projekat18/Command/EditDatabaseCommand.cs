@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Projekat18.Command
 {
-    public class EditDatabaseCommand : ICommand
+    public class EditDatabaseCommand : DataBaseCommand
     {
         private DatabaseViewModel _viewModel;
         private Database _database;
@@ -39,7 +39,7 @@ namespace Projekat18.Command
             _newState = newState;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             // Validacija pre izmene
             _viewModel.ErrorMessage = "";
@@ -64,21 +64,17 @@ namespace Projekat18.Command
             _database.QueryLanguage = _newQueryLang;
             _database.State = _newState;
             _viewModel.proxy.UpdateDatabase(DatabaseMapper.FromModel(_database), _oldProvider);
-            /*
-            _viewModel.OnPropertyChanged(nameof(_viewModel.Databases));
-            _viewModel.OnPropertyChanged(nameof(_viewModel.FilteredDatabases));*/
+            
         }
 
-        public void Undo()
+        public override void Undo()
         {
             _database.Provider = _oldProvider;
             _database.Type = _oldType;
             _database.QueryLanguage = _oldQueryLang;
             _database.State = _oldState;
             _viewModel.proxy.UpdateDatabase(DatabaseMapper.FromModel(_database), _database.Provider);
-            /*
-            _viewModel.OnPropertyChanged(nameof(_viewModel.Databases));
-            _viewModel.OnPropertyChanged(nameof(_viewModel.FilteredDatabases));*/
+           
         }
     }
 }
