@@ -15,7 +15,7 @@ ostale su pomocne
 LiveCharts2 grafikon - Basic Bars za svako stanje
 
 Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy sistem</Text>
-        <Location left="2071" top="1331" />
+        <Location left="2011" top="1266" />
         <Size width="455" height="184" />
       </Entity>
       <Entity type="Class">
@@ -59,7 +59,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>LegacyDigitalStorage</Name>
         <Access>Public</Access>
-        <Location left="1479" top="1566" />
+        <Location left="1571" top="1571" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">protected string storageAdmin</Member>
@@ -69,7 +69,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>LegacyDatabase</Name>
         <Access>Public</Access>
-        <Location left="1810" top="1566" />
+        <Location left="1902" top="1571" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private string dBSystemName</Member>
@@ -100,7 +100,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>OnlineState</Name>
         <Access>Public</Access>
-        <Location left="811" top="178" />
+        <Location left="871" top="294" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -108,7 +108,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>OfflineState</Name>
         <Access>Public</Access>
-        <Location left="1047" top="240" />
+        <Location left="1124" top="294" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -116,15 +116,15 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>RecoveringState</Name>
         <Access>Public</Access>
-        <Location left="1369" top="117" />
+        <Location left="1369" top="294" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>reloadingClass</Name>
+        <Name>ReloadingClass</Name>
         <Access>Public</Access>
-        <Location left="1666" top="253" />
+        <Location left="1610" top="294" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -132,7 +132,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>LegacyDigitalStorageAdapter</Name>
         <Access>Public</Access>
-        <Location left="1458" top="1294" />
+        <Location left="1550" top="1299" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">LegacyDigitalStorage digitalStorage</Member>
@@ -152,7 +152,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>CsvStorage</Name>
         <Access>Public</Access>
-        <Location left="2148" top="433" />
+        <Location left="2123" top="418" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -160,7 +160,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>XmlStorage</Name>
         <Access>Public</Access>
-        <Location left="2183" top="698" />
+        <Location left="2123" top="681" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -168,7 +168,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>JsonStorage</Name>
         <Access>Public</Access>
-        <Location left="2205" top="981" />
+        <Location left="2123" top="943" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -221,7 +221,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>CommandManager</Name>
         <Access>Public</Access>
-        <Location left="698" top="1331" />
+        <Location left="698" top="1312" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">Stack&lt;ICommand&gt; undoStack</Member>
@@ -240,6 +240,30 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <Member type="Field">DatabaseView view</Member>
         <Member type="Field">Database database</Member>
         <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Strategy pattern
+</Text>
+        <Location left="2347" top="698" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>State pattern
+</Text>
+        <Location left="1271" top="195" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Command pattern
+</Text>
+        <Location left="474" top="1532" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Adapter pattern
+</Text>
+        <Location left="1737" top="1392" />
+        <Size width="160" height="75" />
       </Entity>
     </Entities>
     <Relationships>
@@ -266,25 +290,31 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="1" second="7">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Aggregation</AssociationType>
       </Relationship>
       <Relationship type="Realization" first="9" second="7">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1211</X>
+          <Y>535</Y>
+        </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>1380</X>
-          <Y>562</Y>
+          <X>1264</X>
+          <Y>705</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Realization" first="8" second="7">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>905</X>
-          <Y>420</Y>
+          <X>965</X>
+          <Y>536</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1315</X>
@@ -292,30 +322,46 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         </BendPoint>
       </Relationship>
       <Relationship type="Realization" first="10" second="7">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1442</X>
+          <Y>547</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1442</X>
+          <Y>587</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Realization" first="11" second="7">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1697</X>
+          <Y>579</Y>
+        </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>1472</X>
-          <Y>577</Y>
+          <X>1557</X>
+          <Y>698</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Generalization" first="12" second="1">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1631</X>
+          <Y>1178</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Association" first="12" second="4">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
       <Relationship type="Association" first="1" second="13">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -323,19 +369,37 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       </Relationship>
       <Relationship type="Realization" first="14" second="13">
         <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1954</X>
+          <Y>673</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Realization" first="15" second="13">
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Realization" first="16" second="13">
-        <StartOrientation>Vertical</StartOrientation>
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>2091</X>
+          <Y>1052</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1975</X>
+          <Y>944</Y>
+        </BendPoint>
       </Relationship>
       <Relationship type="Association" first="22" second="1">
-        <StartOrientation>Vertical</StartOrientation>
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1402</X>
+          <Y>1418</Y>
+        </BendPoint>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
@@ -356,6 +420,8 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="21" second="18">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
