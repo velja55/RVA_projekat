@@ -31,29 +31,32 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <Member type="Field">public List&lt;Table&gt; Tables</Member>
         <Member type="Field">public Administrator Admin</Member>
         <Member type="Constructor">public Database()</Member>
+        <Member type="Constructor">public Database(string provider, DatabaseType type, string queryLanguage, ObservableCollection&lt;Table&gt; tables, Administrator admin, IDatabaseState state)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Table</Name>
         <Access>Public</Access>
-        <Location left="1119" top="1032" />
+        <Location left="1118" top="1032" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private string name</Member>
         <Member type="Field">private List&lt;string&gt; columnHeaders</Member>
         <Member type="Constructor">public Table()</Member>
+        <Member type="Constructor">public Table(string name, List&lt;string&gt; columnHeaders)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Administrator</Name>
         <Access>Public</Access>
-        <Location left="1775" top="1032" />
+        <Location left="1776" top="1032" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private string userName</Member>
         <Member type="Field">private string certificate</Member>
         <Member type="Field">private string permissions</Member>
         <Member type="Constructor">public Administrator()</Member>
+        <Member type="Constructor">public Administrator(string userName, string certificate, string permissions, string password)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -75,6 +78,8 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <Member type="Field">private string dBSystemName</Member>
         <Member type="Field">private string approachToStoring</Member>
         <Member type="Field">private string instructionSyntax</Member>
+        <Member type="Constructor">public LegacyDatabase()</Member>
+        <Member type="Constructor">public LegacyDatabase(string dbSystemName, string approachToStoring, string instructionSyntax)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Enum">
@@ -132,7 +137,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>LegacyDigitalStorageAdapter</Name>
         <Access>Public</Access>
-        <Location left="1608" top="1287" />
+        <Location left="1608" top="1288" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">LegacyDigitalStorage digitalStorage</Member>
@@ -290,8 +295,6 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="1" second="7">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -350,7 +353,7 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>1688</X>
-          <Y>1261</Y>
+          <Y>1262</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1654</X>
@@ -358,14 +361,14 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         </BendPoint>
       </Relationship>
       <Relationship type="Association" first="12" second="4">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
       <Relationship type="Association" first="1" second="13">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -400,8 +403,6 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         </BendPoint>
       </Relationship>
       <Relationship type="Association" first="22" second="1">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -428,8 +429,6 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="21" second="18">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>

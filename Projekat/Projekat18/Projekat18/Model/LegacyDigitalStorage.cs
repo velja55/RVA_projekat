@@ -10,13 +10,5 @@ namespace Projekat18.Model
     {
         public string StorageAdmin { get; set; }
         public int NumberOfTables { get; set; }
-
-        public LegacyDigitalStorage() { }
-
-        public LegacyDigitalStorage(string storageAdmin, int numberOfTables)
-        {
-            StorageAdmin = storageAdmin;
-            NumberOfTables = numberOfTables;
-        }
     }
 }
