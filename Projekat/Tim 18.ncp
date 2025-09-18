@@ -174,11 +174,14 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>EditCommand</Name>
+        <Name>RemoveCommand</Name>
         <Access>Public</Access>
-        <Location left="1196" top="1686" />
+        <Location left="1190" top="1686" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private int _removedIndex</Member>
+        <Member type="Field">private ObservableCollection&lt;Table&gt; _tables</Member>
+        <Member type="Field">private List&lt;Table&gt; _removedTables</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Interface">
@@ -193,17 +196,26 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>AddCommand</Name>
         <Access>Public</Access>
-        <Location left="924" top="1683" />
+        <Location left="924" top="1686" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private bool _isLegacy</Member>
+        <Member type="Field">private LegacyDatabase _legacyDatabase</Member>
+        <Member type="Field">private string _legacyStateString</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>RemoveCommand</Name>
+        <Name>EditCommand</Name>
         <Access>Public</Access>
         <Location left="681" top="1686" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">private string _oldProvider</Member>
+        <Member type="Field">private DatabaseType _oldType</Member>
+        <Member type="Field">private string _oldQueryLang</Member>
+        <Member type="Field">private IDatabaseState _oldState</Member>
+        <Member type="Field">private string _newProvider</Member>
+        <Member type="Field">private DatabaseType _newType</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -222,12 +234,12 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
       <Entity type="Class">
         <Name>DataBaseCommand</Name>
         <Access>Public</Access>
-        <Location left="1190" top="1317" />
+        <Location left="1190" top="1312" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">DatabaseView view</Member>
         <Member type="Field">Database database</Member>
-        <Modifier>None</Modifier>
+        <Modifier>Abstract</Modifier>
       </Entity>
     </Entities>
     <Relationships>
@@ -254,8 +266,6 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="1" second="7">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -298,14 +308,14 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="12" second="4">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
       <Relationship type="Association" first="1" second="13">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -324,8 +334,6 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="22" second="1">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -348,8 +356,6 @@ Na prikazu svih aktivnih baza podataka, omogućiti prikaz i onih koje su legacy 
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="21" second="18">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
