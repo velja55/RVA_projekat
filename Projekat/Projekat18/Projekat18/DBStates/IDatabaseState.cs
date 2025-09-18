@@ -10,7 +10,7 @@ namespace Projekat18
     public interface IDatabaseState
     {
         string Name { get; }
-        string Color { get; } // za UI
+        string Color { get; }
         void Handle(Database db);
     }
 }

@@ -13,7 +13,7 @@ namespace Projekat18.DBStates
     public class OnlineState : IDatabaseState
     {
         public string Name => "Online";
-        public string Color => "#4CAF50"; // zelena
+        public string Color => "#4CAF50";
         public void Handle(Database db)
         {
             MessageBox.Show($"Database{db.Provider}-{db.QueryLanguage} is online. All operations can be performed.", "Online State", MessageBoxButton.OK, MessageBoxImage.Information);

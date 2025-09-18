@@ -42,13 +42,10 @@ namespace Projekat18.Command
             _viewModel.SelectedDatabase = null;
             if (_database.Tables != null)
             {
-                foreach (var t in _database.Tables)
+                foreach (var t in _database.Tables.ToList())
                 {
-                    if (_tables.Contains(t))
-                    {
-                        _removedTables.Add(t); // za undo
-                        _tables.Remove(t);
-                    }
+                    _removedTables.Add(t);
+                    _tables.Remove(t);
                 }
             }
 
@@ -57,7 +54,6 @@ namespace Projekat18.Command
 
         public override void Undo()
         {
-            // Vraćamo bazu nazad na staru poziciju radi Undo
             if (_removedIndex >= 0 && _removedIndex <= _viewModel.Databases.Count)
                 _viewModel.Databases.Insert(_removedIndex, _database);
             else

@@ -34,7 +34,7 @@ namespace Projekat18.ViewModel
                 var brush = TryGetBrush(group.Color);
                 SeriesCollection.Add(new ColumnSeries
                 {
-                    Title = group.State, // SVI stubovi imaju isti naziv!
+                    Title = group.State,
                     Values = new ChartValues<int> { group.Count },
                     Fill = brush,
                     ColumnPadding = 15,

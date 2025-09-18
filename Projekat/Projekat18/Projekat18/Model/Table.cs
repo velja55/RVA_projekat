@@ -23,5 +23,14 @@ namespace Projekat18.Model
             Name = name;
             ColumnHeaders = columnHeaders ?? new List<string>();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Table other)
+                return this.Name == other.Name;
+            return false;
+        }
+
+        public override int GetHashCode() => Name.GetHashCode();
     }
 }

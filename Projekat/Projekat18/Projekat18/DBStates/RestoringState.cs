@@ -11,7 +11,7 @@ namespace Projekat18.DBStates
     public class RestoringState : IDatabaseState
     {
         public string Name => "Restoring";
-        public string Color => "#2196F3"; // plava
+        public string Color => "#2196F3";
         public void Handle(Database db)
         {
             MessageBox.Show($"Database{db.Provider}-{db.QueryLanguage} is restoring. No operations can be performed.", "Restoring State", MessageBoxButton.OK, MessageBoxImage.Warning);

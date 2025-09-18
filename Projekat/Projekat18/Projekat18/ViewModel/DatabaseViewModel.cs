@@ -222,7 +222,6 @@ namespace Projekat18.ViewModel
 
             proxy.AddLegacyDatabase(LegacyDatabaseMapper.FromModel(legacyDb));
 
-            // Umesto direktnog dodavanja, koristi komandu:
             var cmd = new AddDatabaseCommand(this, legacyDb, LegacyStateString);
             commandManager.ExecuteCommand(cmd);
 
@@ -299,7 +298,6 @@ namespace Projekat18.ViewModel
             var db = new Database(Provider, Type, QueryLanguage, null, admin, State);
             var cmd = new AddDatabaseCommand(this, db);
             commandManager.ExecuteCommand(cmd);
-            //_parent.PushUndo(cmd);
             ClearFields();
         }
 
@@ -340,7 +338,6 @@ namespace Projekat18.ViewModel
 
             var cmd = new RemoveDatabaseCommand(this, SelectedDatabase,_parent.tables);
             commandManager.ExecuteCommand(cmd);
-            //_parent.PushUndo(cmd);
         }
         public bool CanSaveOrEdit()
         {
