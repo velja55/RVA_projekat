@@ -41,7 +41,6 @@ namespace Projekat18.Command
 
         public override void Execute()
         {
-            // Validacija pre izmene
             _viewModel.ErrorMessage = "";
             if (string.IsNullOrWhiteSpace(_newProvider))
             {
@@ -73,7 +72,7 @@ namespace Projekat18.Command
             _database.Type = _oldType;
             _database.QueryLanguage = _oldQueryLang;
             _database.State = _oldState;
-            _viewModel.proxy.UpdateDatabase(DatabaseMapper.FromModel(_database), _database.Provider);
+            _viewModel.proxy.UpdateDatabase(DatabaseMapper.FromModel(_database), _newProvider);
            
         }
     }

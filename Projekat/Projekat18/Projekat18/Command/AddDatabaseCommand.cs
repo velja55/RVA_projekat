@@ -50,6 +50,10 @@ namespace Projekat18.Command
             {
                 _database.State.Handle(_database);
                 _viewModel.Databases.Add(_database);
+                foreach (var t in _database.Tables)
+                {
+                    _viewModel._parent.tables.Add(t);
+                }
                 _viewModel.proxy.AddDatabase(DatabaseMapper.FromModel(_database));
                 _viewModel.FilteredDatabases.Add(_database);
             }
@@ -71,6 +75,10 @@ namespace Projekat18.Command
             else
             {
                 _viewModel.Databases.Remove(_database);
+                foreach (var t in _database.Tables)
+                {
+                    _viewModel._parent.tables.Remove(t);
+                }
                 _viewModel.proxy.DeleteDatabase(_database.Provider);
                 _viewModel.FilteredDatabases.Remove(_database);
             }
